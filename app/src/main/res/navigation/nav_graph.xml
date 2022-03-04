@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.artex.plants.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_addPlant"
+            app:destination="@id/addPlant" />
+        <action
+            android:id="@+id/action_homeFragment_to_plant"
+            app:destination="@id/plant" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPlant"
+        android:name="com.artex.plants.AddPlant"
+        android:label="AddPlant" >
+        <action
+            android:id="@+id/action_addPlant_to_plant"
+            app:destination="@id/plant" />
+    </fragment>
+    <fragment
+        android:id="@+id/plant"
+        android:name="com.artex.plants.Plant"
+        android:label="Plant" />
+    <fragment
+        android:id="@+id/shedule"
+        android:name="com.artex.plants.Shedule"
+        android:label="Shedule" />
+    <fragment
+        android:id="@+id/carePlan"
+        android:name="com.artex.plants.CarePlan"
+        android:label="CarePlan" />
+</navigation>
