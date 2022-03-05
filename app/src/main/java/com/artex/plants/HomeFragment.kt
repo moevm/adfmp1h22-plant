@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.adapters.ChapterAdapter
 import com.artex.plants.data.PlantListItem
+import com.artex.plants.data.Type
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -20,10 +21,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
         super.onViewCreated(view, savedInstanceState)
 
         val list = arrayListOf<PlantListItem>()
-        list.add(PlantListItem("Daisy", "flowerpot with sun"))
-        list.add(PlantListItem("Rose", "flowerpot with bus"))
-        list.add(PlantListItem("Iris", "flowerpot with ball"))
-        list.add(PlantListItem("Narcissus", "flowerpot with car"))
+        list.add(PlantListItem("Daisy", "flowerpot with sun", Type.PLANT))
+        list.add(PlantListItem("Rose", "flowerpot with bus", Type.PLANT))
+        list.add(PlantListItem("Iris", "flowerpot with ball", Type.PLANT))
+        list.add(PlantListItem("Narcissus", "flowerpot with car", Type.PLANT))
 
 
 
