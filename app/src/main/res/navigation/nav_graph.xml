@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_homeFragment_to_plant"
             app:destination="@id/plant" />
+        <action
+            android:id="@+id/action_homeFragment_to_shedule"
+            app:destination="@id/shedule" />
     </fragment>
     <fragment
         android:id="@+id/addPlant"
@@ -27,7 +30,14 @@
     <fragment
         android:id="@+id/plant"
         android:name="com.artex.plants.Plant"
-        android:label="Plant" />
+        android:label="Plant" >
+        <action
+            android:id="@+id/action_plant_to_shedule"
+            app:destination="@id/shedule" />
+        <action
+            android:id="@+id/action_plant_to_carePlan"
+            app:destination="@id/carePlan" />
+    </fragment>
     <fragment
         android:id="@+id/shedule"
         android:name="com.artex.plants.Shedule"

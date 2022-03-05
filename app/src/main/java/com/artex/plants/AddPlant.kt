@@ -1,23 +1,17 @@
 package com.artex.plants
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.artex.plants.adapters.ChapterAdapter
 import com.artex.plants.adapters.PlantAddingAdapter
 import com.artex.plants.data.PlantItem
-import com.artex.plants.data.PlantListItem
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.util.ArrayList
 
 class AddPlant : Fragment(R.layout.add_plant), PlantAddingAdapter.OnAddPlantClickListener {
 
@@ -41,7 +35,8 @@ class AddPlant : Fragment(R.layout.add_plant), PlantAddingAdapter.OnAddPlantClic
     }
 
     override fun onItemClick() {
-
+        val action = AddPlantDirections.actionAddPlantToPlant()
+        findNavController().navigate(action)
     }
 
     override fun onStart() {

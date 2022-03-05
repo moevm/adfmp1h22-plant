@@ -33,15 +33,21 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler.layoutManager = layoutManager
 
-        view.findViewById<FloatingActionButton>(R.id.floatingActionButton).setOnClickListener {
+        view.findViewById<FloatingActionButton>(R.id.addPlantBtn).setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToAddPlant()
+            findNavController().navigate(action)
+        }
+
+        view.findViewById<FloatingActionButton>(R.id.scheduleBtn).setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToShedule()
             findNavController().navigate(action)
         }
 
     }
 
     override fun onItemClick(position: Int) {
-
+            val action = HomeFragmentDirections.actionHomeFragmentToPlant()
+            findNavController().navigate(action)
     }
 
 }
