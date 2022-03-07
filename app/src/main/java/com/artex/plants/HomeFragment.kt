@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantClickListener {
 
     private lateinit var recycler: RecyclerView
-    private lateinit var goalAdapter: ChapterAdapter
+    private lateinit var adapter: ChapterAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,8 +29,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
 
 
         recycler = view.findViewById(R.id.recycler)
-        goalAdapter = ChapterAdapter(this, list)
-        recycler.adapter = goalAdapter
+        adapter = ChapterAdapter(this, list)
+        recycler.adapter = adapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler.layoutManager = layoutManager
 

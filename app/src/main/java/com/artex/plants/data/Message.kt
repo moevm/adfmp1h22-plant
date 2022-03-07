@@ -1,6 +1,6 @@
 package com.artex.plants.data
 
 data class Message(
-    var message: String = "",
+    var text: String = "",
     override var type: Type
     ): ScheduleItem(type)

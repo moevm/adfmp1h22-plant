@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/addPlant"
-        android:name="com.artex.plants.AddPlant"
+        android:name="com.artex.plants.AddPlantFragment"
         android:label="AddPlant" >
         <action
             android:id="@+id/action_addPlant_to_plant"
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/plant"
-        android:name="com.artex.plants.Plant"
+        android:name="com.artex.plants.PlantFragment"
         android:label="Plant" >
         <action
             android:id="@+id/action_plant_to_shedule"
@@ -40,10 +40,15 @@
     </fragment>
     <fragment
         android:id="@+id/shedule"
-        android:name="com.artex.plants.Shedule"
-        android:label="Shedule" />
+        android:name="com.artex.plants.ScheduleFragment"
+        android:label="Shedule" >
+        <argument
+            android:name="mode"
+            app:argType="com.artex.plants.data.ScheduleMode"
+            android:defaultValue="GLOBAL" />
+    </fragment>
     <fragment
         android:id="@+id/carePlan"
-        android:name="com.artex.plants.CarePlan"
+        android:name="com.artex.plants.CarePlanFragment"
         android:label="CarePlan" />
 </navigation>

@@ -13,7 +13,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class AddPlant : Fragment(R.layout.add_plant), PlantAddingAdapter.OnAddPlantClickListener {
+class AddPlantFragment : Fragment(R.layout.add_plant), PlantAddingAdapter.OnAddPlantClickListener {
 
     private lateinit var adapter: PlantAddingAdapter
 
@@ -35,7 +35,7 @@ class AddPlant : Fragment(R.layout.add_plant), PlantAddingAdapter.OnAddPlantClic
     }
 
     override fun onItemClick() {
-        val action = AddPlantDirections.actionAddPlantToPlant()
+        val action = AddPlantFragmentDirections.actionAddPlantToPlant()
         findNavController().navigate(action)
     }
 
