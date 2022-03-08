@@ -3,12 +3,11 @@ package com.artex.plants.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.R
 import com.artex.plants.data.Notification
-import com.artex.plants.data.PlantListItem
 
 
 class NotificationAdapter(
@@ -26,13 +25,9 @@ class NotificationAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val currentItem = notificationList[position]
-//        holder.plantName.text = currentItem.name
-//        holder.plantComment.text = currentItem.comment
-//
-//        holder.card.setOnClickListener {
-//            listener.onItemClick(0)
-//        }
+        val notification = notificationList[position]
+        holder.action.text = notification.action
+        holder.comment.text = notification.comment
     }
 
     override fun getItemCount(): Int {
@@ -40,17 +35,14 @@ class NotificationAdapter(
     }
 
     class ViewHolder( itemView: View): RecyclerView.ViewHolder(itemView) {
-//        var plantName: TextView
-//        var plantComment: TextView
-//        var card: CardView
-//        init {
-//            plantName = itemView.findViewById<TextView>(R.id.notification_action)
-//            plantComment = itemView.findViewById<TextView>(R.id.notification_comment)
-//            card = itemView.findViewById<CardView>(R.id.card)
-//        }
+        var action: TextView
+        var comment: TextView
+        var doneBtn: Button
+        init {
+            action = itemView.findViewById<TextView>(R.id.notification_action)
+            comment = itemView.findViewById<TextView>(R.id.notification_comment)
+            doneBtn = itemView.findViewById<Button>(R.id.done_btn)
+        }
     }
 
-//    interface OnPlantClickListener {
-//        fun onItemClick(position: Int)
-//    }
 }
