@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_plant_to_carePlan"
             app:destination="@id/carePlan" />
+        <action
+            android:id="@+id/action_plant_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/shedule"
@@ -51,4 +54,8 @@
         android:id="@+id/carePlan"
         android:name="com.artex.plants.CarePlanFragment"
         android:label="CarePlan" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.artex.plants.NotificationsFragment"
+        android:label="NotificationsFragment" />
 </navigation>

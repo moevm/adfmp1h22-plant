@@ -32,7 +32,7 @@ class PlantAddingAdapter(
         var card: CardView
 
         init {
-            name = itemView.findViewById<TextView>(R.id.plant_name)
+            name = itemView.findViewById<TextView>(R.id.notification_action)
             card = itemView.findViewById<CardView>(R.id.card)
         }
     }

@@ -6,7 +6,6 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.artex.plants.data.ScheduleMode
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class PlantFragment : Fragment(R.layout.plant) {
@@ -21,6 +20,11 @@ class PlantFragment : Fragment(R.layout.plant) {
 
         view.findViewById<Button>(R.id.carePlanBtn).setOnClickListener {
             val action = PlantFragmentDirections.actionPlantToCarePlan()
+            findNavController().navigate(action)
+        }
+
+        view.findViewById<Button>(R.id.notificationsBtn).setOnClickListener {
+            val action = PlantFragmentDirections.actionPlantToNotificationsFragment()
             findNavController().navigate(action)
         }
     }

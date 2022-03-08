@@ -68,8 +68,8 @@ class ScheduleAdapter(
         var card: CardView
 
         init {
-            plantName = itemView.findViewById<TextView>(R.id.plant_name)
-            plantComment = itemView.findViewById<TextView>(R.id.plant_comment)
+            plantName = itemView.findViewById<TextView>(R.id.notification_action)
+            plantComment = itemView.findViewById<TextView>(R.id.notification_comment)
             card = itemView.findViewById<CardView>(R.id.card)
         }
     }

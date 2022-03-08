@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.artex.plants.HomeFragment
 import com.artex.plants.R
 import com.artex.plants.data.PlantListItem
 
@@ -44,8 +43,8 @@ class ChapterAdapter(
         var plantComment: TextView
         var card: CardView
         init {
-            plantName = itemView.findViewById<TextView>(R.id.plant_name)
-            plantComment = itemView.findViewById<TextView>(R.id.plant_comment)
+            plantName = itemView.findViewById<TextView>(R.id.notification_action)
+            plantComment = itemView.findViewById<TextView>(R.id.notification_comment)
             card = itemView.findViewById<CardView>(R.id.card)
         }
     }
