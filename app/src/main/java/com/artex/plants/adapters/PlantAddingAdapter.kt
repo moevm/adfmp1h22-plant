@@ -7,16 +7,16 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.R
-import com.artex.plants.data.PlantItem
+import com.artex.plants.data.Plant
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 
 class PlantAddingAdapter(
     private val listener: OnAddPlantClickListener,
-    options: FirestoreRecyclerOptions<PlantItem>
+    options: FirestoreRecyclerOptions<Plant>
 ) :
-    FirestoreRecyclerAdapter<PlantItem, PlantAddingAdapter.ViewHolder>(options) {
+    FirestoreRecyclerAdapter<Plant, PlantAddingAdapter.ViewHolder>(options) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,17 +38,17 @@ class PlantAddingAdapter(
     }
 
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: PlantItem) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int, model: Plant) {
         holder.name.text = model.name
 
         holder.card.setOnClickListener {
-            listener.onItemClick()
+            listener.onItemClick(model)
         }
 
     }
 
     interface OnAddPlantClickListener {
-        fun onItemClick()
+        fun onItemClick(model: Plant)
     }
 
 }
