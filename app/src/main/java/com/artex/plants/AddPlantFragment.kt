@@ -44,7 +44,7 @@ class AddPlantFragment : Fragment(R.layout.add_plant), PlantAddingAdapter.OnAddP
     override fun onItemClick(model: Plant) {
         Log.d("TAG", model.toString())
         wordViewModel.insert(model)
-        val action = AddPlantFragmentDirections.actionAddPlantToPlant()
+        val action = AddPlantFragmentDirections.actionAddPlantToPlant(model)
         findNavController().navigate(action)
     }
 

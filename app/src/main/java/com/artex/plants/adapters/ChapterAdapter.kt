@@ -30,7 +30,7 @@ class ChapterAdapter(
         holder.plantComment.text = currentItem.comment
 
         holder.card.setOnClickListener {
-            listener.onItemClick(0)
+            listener.onItemClick(position)
         }
     }
 

@@ -1,8 +1,13 @@
 package com.artex.plants.data
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
+import java.text.SimpleDateFormat
+import java.util.*
 
+@Parcelize
 @Entity(tableName = "plants")
 data class Plant(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
@@ -12,5 +17,11 @@ data class Plant(
     var feed: String = "",
     var getFromHotbed: String = "",
     var putInHotbed: String = "",
-    var comment:String = "Your comment"
-)
+    var comment:String = "Your comment",
+    var createTime: String = getCurrentDate()
+): Parcelable
+
+fun getCurrentDate():String{
+    val sdf = SimpleDateFormat("dd.MM.yyyy")
+    return sdf.format(Date())
+}

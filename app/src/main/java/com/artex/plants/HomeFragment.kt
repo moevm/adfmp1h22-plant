@@ -19,8 +19,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: ChapterAdapter
     private lateinit var wordViewModel: WordViewModel
+    private lateinit var localPlants: List<Plant>
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        localPlants = listOf<Plant>()
 
         recycler = view.findViewById(R.id.recycler)
         adapter = ChapterAdapter(this, arrayListOf<PlantListItem>())
@@ -40,8 +43,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
 
         val activity: MainActivity = activity as MainActivity
         wordViewModel = activity.wordViewModel
-        wordViewModel.allWords.observe(activity) { words ->
-            words.let {
+        wordViewModel.allWords.observe(activity) { plants ->
+            plants.let {
+                localPlants = it
                 adapter.update(get(it))
             }
         }
@@ -49,7 +53,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
     }
 
     override fun onItemClick(position: Int) {
-            val action = HomeFragmentDirections.actionHomeFragmentToPlant()
+            val action = HomeFragmentDirections.actionHomeFragmentToPlant(localPlants[position])
             findNavController().navigate(action)
     }
 

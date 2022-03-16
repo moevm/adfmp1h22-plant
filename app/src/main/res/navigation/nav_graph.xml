@@ -25,7 +25,9 @@
         android:label="AddPlant" >
         <action
             android:id="@+id/action_addPlant_to_plant"
-            app:destination="@id/plant" />
+            app:destination="@id/plant"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/plant"
@@ -40,6 +42,9 @@
         <action
             android:id="@+id/action_plant_to_notificationsFragment"
             app:destination="@id/notificationsFragment" />
+        <argument
+            android:name="plant"
+            app:argType="com.artex.plants.data.Plant" />
     </fragment>
     <fragment
         android:id="@+id/shedule"
