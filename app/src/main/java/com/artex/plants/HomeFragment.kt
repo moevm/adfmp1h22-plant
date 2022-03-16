@@ -7,8 +7,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.adapters.ChapterAdapter
+import com.artex.plants.data.Plant
 import com.artex.plants.data.PlantListItem
 import com.artex.plants.data.Type
+import com.artex.plants.viewmodels.WordViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -16,20 +18,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: ChapterAdapter
-
+    private lateinit var wordViewModel: WordViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val list = arrayListOf<PlantListItem>()
-        list.add(PlantListItem("Daisy", "flowerpot with sun", Type.PLANT))
-        list.add(PlantListItem("Rose", "flowerpot with bus", Type.PLANT))
-        list.add(PlantListItem("Iris", "flowerpot with ball", Type.PLANT))
-        list.add(PlantListItem("Narcissus", "flowerpot with car", Type.PLANT))
-
-
-
         recycler = view.findViewById(R.id.recycler)
-        adapter = ChapterAdapter(this, list)
+        adapter = ChapterAdapter(this, arrayListOf<PlantListItem>())
         recycler.adapter = adapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler.layoutManager = layoutManager
@@ -44,11 +38,27 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
             findNavController().navigate(action)
         }
 
+        val activity: MainActivity = activity as MainActivity
+        wordViewModel = activity.wordViewModel
+        wordViewModel.allWords.observe(activity) { words ->
+            words.let {
+                adapter.update(get(it))
+            }
+        }
+
     }
 
     override fun onItemClick(position: Int) {
             val action = HomeFragmentDirections.actionHomeFragmentToPlant()
             findNavController().navigate(action)
+    }
+
+    fun get(plants: List<Plant>): List<PlantListItem> {
+        val list = arrayListOf<PlantListItem>()
+        for (plant in plants){
+            list.add(PlantListItem(name = plant.name, comment = plant.comment,Type.PLANT))
+        }
+        return list
     }
 
 }

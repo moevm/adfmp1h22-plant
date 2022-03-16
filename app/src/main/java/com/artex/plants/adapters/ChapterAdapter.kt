@@ -49,6 +49,11 @@ class ChapterAdapter(
         }
     }
 
+    fun update (newPlantList: List<PlantListItem>){
+        plantList = newPlantList
+        notifyDataSetChanged()
+    }
+
     interface OnPlantClickListener {
         fun onItemClick(position: Int)
     }

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.adapters.PlantAddingAdapter
 import com.artex.plants.data.Plant
-import com.artex.plants.data.PlantItem
+import com.artex.plants.viewmodels.WordViewModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
@@ -20,6 +20,8 @@ class AddPlantFragment : Fragment(R.layout.add_plant), PlantAddingAdapter.OnAddP
     private lateinit var adapter: PlantAddingAdapter
 
     private lateinit var recycler: RecyclerView
+
+    private lateinit var wordViewModel: WordViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,10 +36,14 @@ class AddPlantFragment : Fragment(R.layout.add_plant), PlantAddingAdapter.OnAddP
         recycler.adapter = adapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler.layoutManager = layoutManager
+
+        val activity: MainActivity = activity as MainActivity
+        wordViewModel = activity.wordViewModel
     }
 
     override fun onItemClick(model: Plant) {
         Log.d("TAG", model.toString())
+        wordViewModel.insert(model)
         val action = AddPlantFragmentDirections.actionAddPlantToPlant()
         findNavController().navigate(action)
     }
