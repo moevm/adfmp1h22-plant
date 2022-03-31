@@ -10,7 +10,7 @@ import com.artex.plants.adapters.ChapterAdapter
 import com.artex.plants.data.Plant
 import com.artex.plants.data.PlantListItem
 import com.artex.plants.data.Type
-import com.artex.plants.viewmodels.WordViewModel
+import com.artex.plants.viewmodels.PlantViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -18,7 +18,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: ChapterAdapter
-    private lateinit var wordViewModel: WordViewModel
+    private lateinit var plantViewModel: PlantViewModel
     private lateinit var localPlants: List<Plant>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,8 +42,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
         }
 
         val activity: MainActivity = activity as MainActivity
-        wordViewModel = activity.wordViewModel
-        wordViewModel.allWords.observe(activity) { plants ->
+        plantViewModel = activity.plantViewModel
+        plantViewModel.allPlants.observe(activity) { plants ->
             plants.let {
                 localPlants = it
                 adapter.update(get(it))
