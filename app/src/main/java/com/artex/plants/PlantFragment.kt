@@ -8,13 +8,18 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.artex.plants.data.Plant
 import com.artex.plants.data.ScheduleMode
+import com.artex.plants.viewmodels.PlantViewModel
 import com.squareup.picasso.Picasso
+import java.io.File
+import java.net.URI
 
 
 class PlantFragment : Fragment(R.layout.plant) {
@@ -25,6 +30,7 @@ class PlantFragment : Fragment(R.layout.plant) {
     lateinit var plantImage: ImageView
     private val args: PlantFragmentArgs by navArgs()
     lateinit var plant: Plant
+    private lateinit var plantViewModel: PlantViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,6 +44,17 @@ class PlantFragment : Fragment(R.layout.plant) {
         topic.text = plant.name
         comment.text = plant.comment
         date.text = plant.createTime
+
+        val uri = Uri.parse(plant.imagePath)
+
+        Toast.makeText(
+            context,
+            (context?.let { DocumentFile.fromSingleUri(it, uri) } !== null).toString(),
+            Toast.LENGTH_SHORT).show()
+
+        if (plant.imagePath!=""){
+            Picasso.get().load(uri).into(plantImage)
+        }
 
         view.findViewById<Button>(R.id.plantSheduleBtn).setOnClickListener {
             val action = PlantFragmentDirections.actionPlantToShedule(mode = ScheduleMode.LOCAL)
@@ -57,6 +74,9 @@ class PlantFragment : Fragment(R.layout.plant) {
         plantImage.setOnClickListener {
             openActivityForResult()
         }
+
+        val activity: MainActivity = activity as MainActivity
+        plantViewModel = activity.plantViewModel
     }
 
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -64,13 +84,15 @@ class PlantFragment : Fragment(R.layout.plant) {
             val data: Intent = result.data!!
             val currentUri: Uri? = data!!.data
             Picasso.get().load(currentUri).into(plantImage)
+            plant.imagePath = currentUri!!.toString()
+            plantViewModel.update(plant)
         }
     }
 
     fun openActivityForResult() {
         val intent = Intent()
         intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
+        intent.action = Intent.ACTION_OPEN_DOCUMENT
         resultLauncher.launch(intent)
     }
 

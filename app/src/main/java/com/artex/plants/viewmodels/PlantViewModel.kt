@@ -44,6 +44,10 @@ class PlantViewModel(private val repository: PlantRepository) : ViewModel() {
     fun insert(word: Plant) = viewModelScope.launch {
         repository.insert(word)
     }
+
+    fun update(word: Plant) = viewModelScope.launch {
+        repository.update(word)
+    }
 }
 
 class WordViewModelFactory(private val repository: PlantRepository) : ViewModelProvider.Factory {

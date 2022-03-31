@@ -16,10 +16,7 @@
 
 package com.artex.plants.interfaces
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.artex.plants.data.Plant
 import kotlinx.coroutines.flow.Flow
 
@@ -42,6 +39,9 @@ interface PlantDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: Plant)
+
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun update(word: Plant)
 
     @Query("DELETE FROM plants")
     suspend fun deleteAll()

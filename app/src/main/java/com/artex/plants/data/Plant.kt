@@ -18,7 +18,8 @@ data class Plant(
     var getFromHotbed: String = "",
     var putInHotbed: String = "",
     var comment:String = "Your comment",
-    var createTime: String = getCurrentDate()
+    var createTime: String = getCurrentDate(),
+    var imagePath:String = ""
 ): Parcelable
 
 fun getCurrentDate():String{
