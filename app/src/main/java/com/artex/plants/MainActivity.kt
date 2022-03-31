@@ -4,14 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
-import com.artex.plants.room.WordsApplication
+import com.artex.plants.room.PlantApplication
 import com.artex.plants.viewmodels.PlantViewModel
 import com.artex.plants.viewmodels.WordViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
     val plantViewModel: PlantViewModel by viewModels {
-        WordViewModelFactory((application as WordsApplication).repository)
+        WordViewModelFactory((application as PlantApplication).repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

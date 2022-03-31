@@ -32,30 +32,30 @@ import kotlinx.coroutines.launch
  * The fact that this has very few comments emphasizes its coolness.
  */
 @Database(entities = [Plant::class], version = 1)
-abstract class WordRoomDatabase : RoomDatabase() {
+abstract class PlantRoomDatabase : RoomDatabase() {
 
     abstract fun wordDao(): PlantDao
 
     companion object {
         @Volatile
-        private var INSTANCE: WordRoomDatabase? = null
+        private var INSTANCE: PlantRoomDatabase? = null
 
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
-        ): WordRoomDatabase {
+        ): PlantRoomDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    WordRoomDatabase::class.java,
+                    PlantRoomDatabase::class.java,
                     "word_database"
                 )
                     // Wipes and rebuilds instead of migrating if no Migration object.
                     // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
-                    .addCallback(WordDatabaseCallback(scope))
+                    .addCallback(PlantDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -63,7 +63,7 @@ abstract class WordRoomDatabase : RoomDatabase() {
             }
         }
 
-        private class WordDatabaseCallback(
+        private class PlantDatabaseCallback(
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
             /**
