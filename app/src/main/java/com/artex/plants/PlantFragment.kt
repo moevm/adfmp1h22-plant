@@ -62,7 +62,7 @@ class PlantFragment : Fragment(R.layout.plant) {
         }
 
         view.findViewById<Button>(R.id.carePlanBtn).setOnClickListener {
-            val action = PlantFragmentDirections.actionPlantToCarePlan()
+            val action = PlantFragmentDirections.actionPlantToCarePlan(plant)
             findNavController().navigate(action)
         }
 
@@ -77,6 +77,15 @@ class PlantFragment : Fragment(R.layout.plant) {
 
         val activity: MainActivity = activity as MainActivity
         plantViewModel = activity.plantViewModel
+        plantViewModel.allPlants.observe(activity) { plants ->
+            plants.let {
+                for (item in it){
+                    if (item.id == args.plant.id){
+                        plant = item
+                    }
+                }
+            }
+        }
     }
 
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

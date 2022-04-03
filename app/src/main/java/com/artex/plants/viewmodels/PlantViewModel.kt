@@ -23,6 +23,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.artex.plants.data.Plant
 import com.example.android.roomwordssample.PlantRepository
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 /**
@@ -41,6 +42,11 @@ class PlantViewModel(private val repository: PlantRepository) : ViewModel() {
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
+    fun getPlantById(id: Int): LiveData<Plant>  {
+        return repository.getPlantById(id).asLiveData()
+    }
+
+
     fun insert(word: Plant) = viewModelScope.launch {
         repository.insert(word)
     }

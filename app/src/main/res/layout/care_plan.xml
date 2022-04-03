@@ -84,23 +84,23 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/time_from_hotbed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="at 9:00"
+        android:text="9:00"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline3" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/time_in_hotbed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="at 21:00"
+        android:text="21:00"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView7"
-        app:layout_constraintStart_toStartOf="@+id/textView12" />
+        app:layout_constraintStart_toStartOf="@+id/time_from_hotbed" />
 
     <Spinner
         android:id="@+id/trim_spinner"

@@ -33,6 +33,11 @@ class PlantRepository(private val plantDao: PlantDao) {
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work
     // off the main thread.
+
+    fun getPlantById(id: Int): Flow<Plant> {
+        return plantDao.getPlantById(id)
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(plant: Plant) {

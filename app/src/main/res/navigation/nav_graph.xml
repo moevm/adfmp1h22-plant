@@ -58,7 +58,11 @@
     <fragment
         android:id="@+id/carePlan"
         android:name="com.artex.plants.CarePlanFragment"
-        android:label="CarePlan" />
+        android:label="CarePlan" >
+        <argument
+            android:name="plant"
+            app:argType="com.artex.plants.data.Plant" />
+    </fragment>
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.artex.plants.NotificationsFragment"

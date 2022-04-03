@@ -37,6 +37,9 @@ interface PlantDao {
     @Query("SELECT * FROM plants ORDER BY name ASC")
     fun getAlphabetizedWords(): Flow<List<Plant>>
 
+    @Query("SELECT * FROM plants WHERE id=:id")
+    fun getPlantById(id: Int): Flow<Plant>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: Plant)
 
