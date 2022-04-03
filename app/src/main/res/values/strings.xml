@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Plants</string>
+
+    <string-array name="plants_time_array">
+        <item>every 7 days</item>
+        <item>every 6 days</item>
+        <item>every 5 days</item>
+        <item>every 4 days</item>
+        <item>every 3 days</item>
+        <item>every 2 days</item>
+        <item>every 1 days</item>
+        <item>never</item>
+    </string-array>
 </resources>
