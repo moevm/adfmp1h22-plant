@@ -1,4 +1,5 @@
 package com.artex.plants.data
+
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -17,12 +18,13 @@ data class Plant(
     var feed: String = "",
     var getFromHotbed: String = "",
     var putInHotbed: String = "",
-    var comment:String = "Your comment",
+    var comment: String = "Your comment",
     var createTime: String = getCurrentDate(),
-    var imagePath:String = ""
-): Parcelable
+    var imagePath: String = "",
+    var isHotbedUse: Boolean = true
+) : Parcelable
 
-fun getCurrentDate():String{
+fun getCurrentDate(): String {
     val sdf = SimpleDateFormat("dd.MM.yyyy")
     return sdf.format(Date())
 }

@@ -9,7 +9,7 @@
     <string name="one_days">every 1 days</string>
     <string name="never">never</string>
 
-    <string-array name="plants_time_array">
+    <string-array name="plants_modes_array">
         <item>every 7 days</item>
         <item>every 6 days</item>
         <item>every 5 days</item>

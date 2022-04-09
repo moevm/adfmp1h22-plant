@@ -22,10 +22,14 @@ class CarePlanFragment : Fragment(R.layout.care_plan), AdapterView.OnItemSelecte
     private lateinit var plantViewModel: PlantViewModel
     private val args: PlantFragmentArgs by navArgs()
     private lateinit var plant: Plant
+    private lateinit var modes: Array<String>
+    private lateinit var checkBox: CheckBox
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         plant = args.plant
+        Log.d("TAG", "Init" + plant.toString())
 
         waterSpinner = view.findViewById(R.id.water_spinner)
         feedSpinner = view.findViewById(R.id.feed_spinner)
@@ -33,6 +37,10 @@ class CarePlanFragment : Fragment(R.layout.care_plan), AdapterView.OnItemSelecte
 
         timeFromHotbed = view.findViewById(R.id.time_from_hotbed)
         timeInHotbed = view.findViewById(R.id.time_in_hotbed)
+
+        checkBox = view.findViewById(R.id.isHotbedCheckBox)
+
+        modes = resources.getStringArray(R.array.plants_modes_array)
 
         timeFromHotbed.text = plant.getFromHotbed
         timeInHotbed.text = plant.putInHotbed
@@ -42,8 +50,12 @@ class CarePlanFragment : Fragment(R.layout.care_plan), AdapterView.OnItemSelecte
 
         val adapter = ArrayAdapter.createFromResource(
             view.context,
-            R.array.plants_time_array, android.R.layout.simple_spinner_item
+            R.array.plants_modes_array, android.R.layout.simple_spinner_item
         )
+
+        if (!plant.isHotbedUse){
+            checkBox.isChecked = true
+        }
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         waterSpinner.adapter = adapter
@@ -52,6 +64,10 @@ class CarePlanFragment : Fragment(R.layout.care_plan), AdapterView.OnItemSelecte
         waterSpinner.setOnItemSelectedListener(this)
         feedSpinner.setOnItemSelectedListener(this)
         trimSpinner.setOnItemSelectedListener(this)
+
+        waterSpinner.setSelection(getPosition(plant.water, modes))
+        feedSpinner.setSelection(getPosition(plant.feed, modes))
+        trimSpinner.setSelection(getPosition(plant.trim, modes))
 
         val currentTime = Calendar.getInstance()
         val hour = currentTime.get(Calendar.HOUR_OF_DAY)
@@ -79,18 +95,27 @@ class CarePlanFragment : Fragment(R.layout.care_plan), AdapterView.OnItemSelecte
             }, hour, minute, false).show()
         }
 
+        checkBox.setOnCheckedChangeListener { compoundButton, isChecked ->
+            plant.isHotbedUse = !isChecked
+            plantViewModel.update(plant)
+        }
+
     }
 
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+
         when (p0!!.id) {
             R.id.water_spinner -> {
-
+                plant.water = modes[position]
+                plantViewModel.update(plant)
             }
             R.id.feed_spinner -> {
-
+                plant.feed = modes[position]
+                plantViewModel.update(plant)
             }
             R.id.trim_spinner -> {
-
+                plant.trim = modes[position]
+                plantViewModel.update(plant)
             }
         }
     }
@@ -100,6 +125,19 @@ class CarePlanFragment : Fragment(R.layout.care_plan), AdapterView.OnItemSelecte
     }
 
     fun getTimeText(hourOfDay: Int, minute: Int): String {
-        return "${hourOfDay}:${minute}"
+        if (minute < 10) {
+            return "${hourOfDay}:0${minute}"
+        } else {
+            return "${hourOfDay}:${minute}"
+        }
+    }
+
+    fun getPosition(mode: String, modes: Array<String>): Int {
+        for (i in 0..modes.size - 1) {
+            if (mode == modes[i]) {
+                return i
+            }
+        }
+        return 0
     }
 }
