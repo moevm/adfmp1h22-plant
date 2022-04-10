@@ -49,7 +49,7 @@ class ScheduleFragment : Fragment(R.layout.shedule) {
             var dateBefore: LocalDate = LocalDate.now()
             val dateAfter: LocalDate = LocalDate.parse(plant.createTime, formatter)
             for (i in 0..6) {
-                dateBefore = dateBefore.plusDays(i.toLong())
+                if (i != 0) dateBefore = dateBefore.plusDays(1)
                 val daysBetween: Long = ChronoUnit.DAYS.between(dateAfter, dateBefore)
 
                 val waterPosition = modes.size - getPosition(plant.water, modes)
@@ -66,7 +66,6 @@ class ScheduleFragment : Fragment(R.layout.shedule) {
                 if (i == 0) date = "Today " + date
                 if (i == 1) date = "Tommorow " + date
 
-
                 val plantListItem = PlantListItem(
                     plant.name,
                     plant.comment,
@@ -80,12 +79,6 @@ class ScheduleFragment : Fragment(R.layout.shedule) {
                     type = Type.PLANT
                 )
                 list.add(plantListItem)
-//                Log.d("TAG", "Water " + (modes.size - getPosition(plant.water, modes)).toString())
-//                Log.d("TAG", "Feed " + (modes.size - getPosition(plant.feed, modes)).toString())
-//                Log.d("TAG", "Trim " + (modes.size - getPosition(plant.trim, modes)).toString())
-//                Log.d("TAG", "Days " + (daysBetween + 1).toString())
-//                Log.d("TAG", plantListItem.toString())
-//                Log.d("TAG", daysBetween.toString())
             }
         }
         recycler = view.findViewById(R.id.shedule_recycler)
