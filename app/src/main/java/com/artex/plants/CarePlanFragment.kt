@@ -29,7 +29,6 @@ class CarePlanFragment : Fragment(R.layout.care_plan), AdapterView.OnItemSelecte
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         plant = args.plant
-        Log.d("TAG", "Init" + plant.toString())
 
         waterSpinner = view.findViewById(R.id.water_spinner)
         feedSpinner = view.findViewById(R.id.feed_spinner)

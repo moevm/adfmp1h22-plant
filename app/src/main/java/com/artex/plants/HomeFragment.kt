@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.adapters.ChapterAdapter
 import com.artex.plants.data.Plant
 import com.artex.plants.data.PlantListItem
+import com.artex.plants.data.ScheduleMode
 import com.artex.plants.data.Type
 import com.artex.plants.viewmodels.PlantViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -37,7 +38,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
         }
 
         view.findViewById<FloatingActionButton>(R.id.scheduleBtn).setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToShedule()
+            val action = HomeFragmentDirections.actionHomeFragmentToShedule(
+                mode = ScheduleMode.GLOBAL,
+                plant = Plant()
+            )
             findNavController().navigate(action)
         }
 
@@ -53,14 +57,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
     }
 
     override fun onItemClick(position: Int) {
-            val action = HomeFragmentDirections.actionHomeFragmentToPlant(localPlants[position])
-            findNavController().navigate(action)
+        val action = HomeFragmentDirections.actionHomeFragmentToPlant(localPlants[position])
+        findNavController().navigate(action)
     }
 
     fun get(plants: List<Plant>): List<PlantListItem> {
         val list = arrayListOf<PlantListItem>()
-        for (plant in plants){
-            list.add(PlantListItem(name = plant.name, comment = plant.comment,Type.PLANT))
+        for (plant in plants) {
+            list.add(PlantListItem(name = plant.name, comment = plant.comment, type = Type.PLANT))
         }
         return list
     }

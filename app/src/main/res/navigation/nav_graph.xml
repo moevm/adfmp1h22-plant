@@ -54,6 +54,9 @@
             android:name="mode"
             app:argType="com.artex.plants.data.ScheduleMode"
             android:defaultValue="GLOBAL" />
+        <argument
+            android:name="plant"
+            app:argType="com.artex.plants.data.Plant" />
     </fragment>
     <fragment
         android:id="@+id/carePlan"

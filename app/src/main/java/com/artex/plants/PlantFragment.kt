@@ -57,7 +57,7 @@ class PlantFragment : Fragment(R.layout.plant) {
         }
 
         view.findViewById<Button>(R.id.plantSheduleBtn).setOnClickListener {
-            val action = PlantFragmentDirections.actionPlantToShedule(mode = ScheduleMode.LOCAL)
+            val action = PlantFragmentDirections.actionPlantToShedule(mode = ScheduleMode.LOCAL, plant = plant)
             findNavController().navigate(action)
         }
 
