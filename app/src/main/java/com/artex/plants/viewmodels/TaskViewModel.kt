@@ -21,8 +21,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.artex.plants.data.Plant
-import com.example.android.roomwordssample.PlantRepository
+import com.artex.plants.data.Task
+import com.example.android.roomwordssample.TaskRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -31,36 +31,36 @@ import kotlinx.coroutines.launch
  * an up-to-date list of all words.
  */
 
-class PlantViewModel(private val repository: PlantRepository) : ViewModel() {
+class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
     // Using LiveData and caching what allWords returns has several benefits:
     // - We can put an observer on the data (instead of polling for changes) and only update the
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
-    val allPlants: LiveData<List<Plant>> = repository.allPlants.asLiveData()
+    val allTasks: LiveData<List<Task>> = repository.allPlants.asLiveData()
 
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
-    fun getPlantById(id: Int): LiveData<Plant>  {
+    fun getPlantById(id: Int): LiveData<Task>  {
         return repository.getPlantById(id).asLiveData()
     }
 
 
-    fun insert(word: Plant) = viewModelScope.launch {
+    fun insert(word:Task) = viewModelScope.launch {
         repository.insert(word)
     }
 
-    fun update(word: Plant) = viewModelScope.launch {
+    fun update(word: Task) = viewModelScope.launch {
         repository.update(word)
     }
 }
 
-class PlantViewModelFactory(private val repository: PlantRepository) : ViewModelProvider.Factory {
+class TaskViewModelFactory(private val repository: TaskRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(PlantViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return PlantViewModel(repository) as T
+            return TaskViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

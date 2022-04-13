@@ -14,13 +14,19 @@ import androidx.navigation.fragment.NavHostFragment
 import com.artex.plants.broadcast.MemoBroadcast
 import com.artex.plants.room.PlantApplication
 import com.artex.plants.viewmodels.PlantViewModel
-import com.artex.plants.viewmodels.WordViewModelFactory
+import com.artex.plants.viewmodels.TaskViewModel
+import com.artex.plants.viewmodels.PlantViewModelFactory
+import com.artex.plants.viewmodels.TaskViewModelFactory
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     val plantViewModel: PlantViewModel by viewModels {
-        WordViewModelFactory((application as PlantApplication).repository)
+        PlantViewModelFactory((application as PlantApplication).plantRepository)
+    }
+
+    val taskViewModel: TaskViewModel by viewModels {
+        TaskViewModelFactory((application as PlantApplication).taskRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -7,31 +7,32 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.R
-import com.artex.plants.data.Notification
+import com.artex.plants.data.PlantListItem
+import com.artex.plants.data.Task
 
 
-class NotificationAdapter(
+class TaskAdapter(
 //    private val listener: OnPlantClickListener,
-    private var notificationList: List<Notification>,
+    private var taskList: List<Task>,
 ) :
-    RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
+    RecyclerView.Adapter<TaskAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.notifications_list_item,
+            R.layout.tasks_list_item,
             parent, false
         )
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val notification = notificationList[position]
-        holder.action.text = notification.action
+        val notification = taskList[position]
+        holder.action.text = notification.action + " " + notification.name
         holder.comment.text = notification.comment
     }
 
     override fun getItemCount(): Int {
-        return notificationList.size
+        return taskList.size
     }
 
     class ViewHolder( itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -43,6 +44,11 @@ class NotificationAdapter(
             comment = itemView.findViewById<TextView>(R.id.notification_comment)
             doneBtn = itemView.findViewById<Button>(R.id.done_btn)
         }
+    }
+
+    fun update (newTaskList: List<Task>){
+        taskList = newTaskList
+        notifyDataSetChanged()
     }
 
 }
