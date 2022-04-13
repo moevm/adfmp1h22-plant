@@ -4,20 +4,17 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.adapters.TaskAdapter
 import com.artex.plants.data.*
 import com.artex.plants.viewmodels.PlantViewModel
-import com.artex.plants.viewmodels.TaskViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class NotificationsFragment : Fragment(R.layout.notifications) {
@@ -25,20 +22,18 @@ class NotificationsFragment : Fragment(R.layout.notifications) {
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: TaskAdapter
     private lateinit var plantViewModel: PlantViewModel
-    private lateinit var taskViewModel: TaskViewModel
     private lateinit var modes: Array<String>
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        modes = resources.getStringArray(R.array.plants_modes_array)
+
         val activity: MainActivity = activity as MainActivity
         plantViewModel = activity.plantViewModel
-        taskViewModel = activity.taskViewModel
 
-        modes = resources.getStringArray(R.array.plants_modes_array)
-        val plants = plantViewModel.allPlants.value
-        val taskList = taskViewModel.allTasks.value
+        val taskList = plantViewModel.allTasks.value
         var isTodayData = true
         if (taskList != null) {
             if (taskList.size > 0) {
@@ -70,13 +65,13 @@ class NotificationsFragment : Fragment(R.layout.notifications) {
                     val dateAfter: LocalDate = LocalDate.parse(plantInList.createTime, formatter)
                     val scheduleItem = getPlantListItem(plantInList, 0, dateBefore, dateAfter, formatter)
                     if (scheduleItem.water) {
-                        taskViewModel.insert(Task(name = scheduleItem.name, comment = scheduleItem.comment, action = "Water", isDone = false))
+                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, action = "Water", isDone = false))
                     }
                     if (scheduleItem.trim) {
-                        taskViewModel.insert(Task(name = scheduleItem.name, comment = scheduleItem.comment, action = "Trim", isDone = false))
+                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, action = "Trim", isDone = false))
                     }
                     if (scheduleItem.feed) {
-                        taskViewModel.insert(Task(name = scheduleItem.name, comment = scheduleItem.comment, action = "Feed", isDone = false))
+                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, action = "Feed", isDone = false))
                     }
                 }
             }
@@ -106,7 +101,7 @@ class NotificationsFragment : Fragment(R.layout.notifications) {
             findNavController().navigate(action)
         }
 
-        taskViewModel.allTasks.observe(activity) { tasks ->
+        plantViewModel.allTasks.observe(activity) { tasks ->
             tasks.let {
 //                localPlants = it
                 adapter.update(it)

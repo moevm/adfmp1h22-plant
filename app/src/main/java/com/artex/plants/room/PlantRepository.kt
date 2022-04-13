@@ -17,14 +17,16 @@ package com.example.android.roomwordssample
 
 import androidx.annotation.WorkerThread
 import com.artex.plants.data.Plant
+import com.artex.plants.data.Task
 import com.artex.plants.interfaces.PlantDao
+import com.artex.plants.interfaces.TaskDao
 import kotlinx.coroutines.flow.Flow
 
 /**
  * Abstracted Repository as promoted by the Architecture Guide.
  * https://developer.android.com/topic/libraries/architecture/guide.html
  */
-class PlantRepository(private val plantDao: PlantDao) {
+class PlantRepository(private val plantDao: PlantDao, private val taskDao: TaskDao) {
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
@@ -48,5 +50,23 @@ class PlantRepository(private val plantDao: PlantDao) {
     @WorkerThread
     suspend fun update(plant: Plant) {
         plantDao.update(plant)
+    }
+
+    val allTasks: Flow<List<Task>> = taskDao.getAlphabetizedWords()
+
+    fun getTaskById(id: Int): Flow<Task> {
+        return taskDao.getPlantById(id)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insertTask(task: Task) {
+        taskDao.insert(task)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun updateTask(task: Task) {
+        taskDao.update(task)
     }
 }

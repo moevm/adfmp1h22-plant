@@ -19,8 +19,6 @@ package com.artex.plants.room
 import android.app.Application
 import com.example.android.roomwordssample.PlantRepository
 import com.example.android.roomwordssample.PlantRoomDatabase
-import com.example.android.roomwordssample.TaskRepository
-import com.example.android.roomwordssample.TaskRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -31,7 +29,5 @@ class PlantApplication : Application() {
     // Using by lazy so the database and the repository are only created when they're needed
     // rather than when the application starts
     val plantDatabase by lazy { PlantRoomDatabase.getDatabase(this, applicationScope) }
-    val plantRepository by lazy { PlantRepository(plantDatabase.wordDao()) }
-    val taskDatabase by lazy { TaskRoomDatabase.getDatabase(this, applicationScope) }
-    val taskRepository by lazy { TaskRepository(taskDatabase.wordDao()) }
+    val plantRepository by lazy { PlantRepository(plantDatabase.plantDao(),plantDatabase.taskDao()) }
 }
