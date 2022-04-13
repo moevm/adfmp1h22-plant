@@ -34,6 +34,11 @@ class NotificationsFragment : Fragment(R.layout.notifications) {
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler.layoutManager = layoutManager
 
+        view.findViewById<Button>(R.id.go_home_btn).setOnClickListener {
+            val action = NotificationsFragmentDirections.actionNotificationsFragmentToHomeFragment()
+            findNavController().navigate(action)
+        }
+
     }
 
 }

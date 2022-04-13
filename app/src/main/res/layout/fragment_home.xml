@@ -35,11 +35,12 @@
         android:id="@+id/scheduleBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
         android:src="@drawable/ic_baseline_calendar_today_24"
         app:layout_constraintBottom_toTopOf="@+id/addPlantBtn"
-        app:layout_constraintEnd_toEndOf="@+id/recycler" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addPlantBtn"
@@ -74,12 +75,13 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/careBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
         android:src="@drawable/ic_baseline_grass_24"
         app:layout_constraintBottom_toTopOf="@+id/scheduleBtn"
-        app:layout_constraintEnd_toEndOf="@+id/recycler" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

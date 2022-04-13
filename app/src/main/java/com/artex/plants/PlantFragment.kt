@@ -66,11 +66,6 @@ class PlantFragment : Fragment(R.layout.plant) {
             findNavController().navigate(action)
         }
 
-        view.findViewById<Button>(R.id.notificationsBtn).setOnClickListener {
-            val action = PlantFragmentDirections.actionPlantToNotificationsFragment()
-            findNavController().navigate(action)
-        }
-
         plantImage.setOnClickListener {
             openActivityForResult()
         }

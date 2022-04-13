@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -26,20 +27,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val inflater = navHostFragment.navController.navInflater
-        val graph = inflater.inflate(R.navigation.nav_graph)
 
-        val navController = navHostFragment.navController
-        navController.setGraph(graph, intent.extras)
+        val bundle: Bundle? = intent.extras
+
+        bundle?.let {
+            val string: String? = it.getString("key")
+            if (string.equals("notify")) {
+                Toast.makeText(applicationContext, "NOTIFY", Toast.LENGTH_SHORT).show()
+
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+                val inflater = navHostFragment.navController.navInflater
+                val graph = inflater.inflate(R.navigation.nav_graph)
+
+                graph.setStartDestination(R.id.notificationsFragment)
+
+                val navController = navHostFragment.navController
+                navController.setGraph(graph, intent.extras)
+            }
+        }
+
+
 
         NotificationChannel()
 
         val calendar = Calendar.getInstance()
-        calendar[Calendar.HOUR_OF_DAY] = 7
-        calendar[Calendar.MINUTE] = 28
-        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.HOUR_OF_DAY] = 9
+        calendar[Calendar.MINUTE] = 34
+        calendar[Calendar.SECOND] = 40
 
         if (Calendar.getInstance().after(calendar)) {
             calendar.add(Calendar.DAY_OF_MONTH, 1)

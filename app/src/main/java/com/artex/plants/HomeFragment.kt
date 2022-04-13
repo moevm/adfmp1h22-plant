@@ -45,6 +45,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
             findNavController().navigate(action)
         }
 
+        view.findViewById<FloatingActionButton>(R.id.careBtn).setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToNotificationsFragment()
+            findNavController().navigate(action)
+        }
+
         val activity: MainActivity = activity as MainActivity
         plantViewModel = activity.plantViewModel
         plantViewModel.allPlants.observe(activity) { plants ->

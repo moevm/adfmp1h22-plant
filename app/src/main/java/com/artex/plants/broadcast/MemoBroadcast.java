@@ -21,6 +21,7 @@ public class MemoBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent repeating_Intent = new Intent(context, MainActivity.class);
+        repeating_Intent.putExtra("key","notify");
         repeating_Intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, repeating_Intent, PendingIntent.FLAG_UPDATE_CURRENT);

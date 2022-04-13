@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_homeFragment_to_shedule"
             app:destination="@id/shedule" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationsFragment"
+            app:destination="@id/notificationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPlant"
@@ -39,9 +42,6 @@
         <action
             android:id="@+id/action_plant_to_carePlan"
             app:destination="@id/carePlan" />
-        <action
-            android:id="@+id/action_plant_to_notificationsFragment"
-            app:destination="@id/notificationsFragment" />
         <argument
             android:name="plant"
             app:argType="com.artex.plants.data.Plant" />
@@ -69,5 +69,10 @@
     <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.artex.plants.NotificationsFragment"
-        android:label="NotificationsFragment" />
+        android:label="NotificationsFragment" >
+        <action
+            android:id="@+id/action_notificationsFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment" />
+    </fragment>
 </navigation>
