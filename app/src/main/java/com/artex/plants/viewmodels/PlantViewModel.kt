@@ -70,8 +70,12 @@ class PlantViewModel(private val repository: PlantRepository) : ViewModel() {
         repository.insertTask(task)
     }
 
-    fun update(task: Task) = viewModelScope.launch {
+    fun updateTask(task: Task) = viewModelScope.launch {
         repository.updateTask(task)
+    }
+
+    fun deleteAllTasks() = viewModelScope.launch {
+        repository.deleteAllTasks()
     }
 }
 

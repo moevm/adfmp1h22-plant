@@ -18,8 +18,8 @@ package com.example.android.roomwordssample
 import androidx.annotation.WorkerThread
 import com.artex.plants.data.Plant
 import com.artex.plants.data.Task
-import com.artex.plants.interfaces.PlantDao
 import com.artex.plants.interfaces.TaskDao
+import com.artex.plants.interfaces.PlantDao
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -68,5 +68,11 @@ class PlantRepository(private val plantDao: PlantDao, private val taskDao: TaskD
     @WorkerThread
     suspend fun updateTask(task: Task) {
         taskDao.update(task)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun deleteAllTasks() {
+        taskDao.deleteAll()
     }
 }

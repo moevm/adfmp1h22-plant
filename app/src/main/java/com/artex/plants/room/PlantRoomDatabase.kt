@@ -23,8 +23,8 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.artex.plants.data.Plant
 import com.artex.plants.data.Task
-import com.artex.plants.interfaces.PlantDao
 import com.artex.plants.interfaces.TaskDao
+import com.artex.plants.interfaces.PlantDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,11 +33,11 @@ import kotlinx.coroutines.launch
  * This is the backend. The database. This used to be done by the OpenHelper.
  * The fact that this has very few comments emphasizes its coolness.
  */
-@Database(entities = [Plant::class, Task::class], version = 1)
+@Database(entities = [Task::class, Plant::class], version = 1)
 abstract class PlantRoomDatabase : RoomDatabase() {
 
-    abstract fun plantDao(): PlantDao
     abstract fun taskDao(): TaskDao
+    abstract fun plantDao(): PlantDao
 
     companion object {
         @Volatile
@@ -78,7 +78,7 @@ abstract class PlantRoomDatabase : RoomDatabase() {
                 // comment out the following line.
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        populateDatabase(database.plantDao(), database.taskDao())
+                        populateDatabase(database.taskDao(), database.plantDao())
                     }
                 }
             }
@@ -88,11 +88,11 @@ abstract class PlantRoomDatabase : RoomDatabase() {
          * Populate the database in a new coroutine.
          * If you want to start with more words, just add them.
          */
-        suspend fun populateDatabase(wordDao: PlantDao, taskDao: TaskDao) {
+        suspend fun populateDatabase(taskDao: TaskDao, plantDao: PlantDao) {
             // Start the app with a clean database every time.
             // Not needed if you only populate on creation.
-            wordDao.deleteAll()
             taskDao.deleteAll()
+            plantDao.deleteAll()
 
 //            var word = Plant("Hello")
 //            wordDao.insert(word)

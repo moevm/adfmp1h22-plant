@@ -59,6 +59,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
             }
         }
 
+        plantViewModel.allTasks.observe(activity) { tasks ->
+            tasks.let {
+//                localPlants = it
+//                adapter.update(get(it))
+            }
+        }
+
     }
 
     override fun onItemClick(position: Int) {

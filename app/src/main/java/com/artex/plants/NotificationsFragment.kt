@@ -15,9 +15,11 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
-class NotificationsFragment : Fragment(R.layout.notifications) {
+class NotificationsFragment : Fragment(R.layout.notifications), TaskAdapter.OnTaskClickListener {
 
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: TaskAdapter
@@ -33,14 +35,25 @@ class NotificationsFragment : Fragment(R.layout.notifications) {
         val activity: MainActivity = activity as MainActivity
         plantViewModel = activity.plantViewModel
 
-        val taskList = plantViewModel.allTasks.value
-        var isTodayData = true
-        if (taskList != null) {
-            if (taskList.size > 0) {
+        val plants = plantViewModel.allPlants.value
+        val oldTasks = plantViewModel.allTasks.value
+
+        if (plants!== null && oldTasks!=null) {
+            val newTasks = createTasks(oldTasks, plants)
+            plantViewModel.deleteAllTasks()
+            for (task in newTasks){
+                plantViewModel.insertTask(task)
+            }
+        }
+
+        /*var isTodayData = true
+        if (tasks != null) {
+            if (tasks.size > 0) {
                 val sdf = SimpleDateFormat("dd.MM.yyyy")
                 val todayDate = sdf.format(Date())
-                for (item in taskList) {
+                for (item in tasks) {
                     if (!item.taskDate.equals(todayDate)) {
+                        plantViewModel.deleteAllTasks()
                         isTodayData = false
                         break
                     }
@@ -50,48 +63,36 @@ class NotificationsFragment : Fragment(R.layout.notifications) {
             }
         } else {
             isTodayData = false
-        }
+        }*/
 
-        var list = arrayListOf<Task>()
-        if (isTodayData) {
-            list = taskList as ArrayList<Task>
+
+        /*if (isTodayData) {
+//            list = tasks as ArrayList<Task>
         } else {
             val plants = plantViewModel.allPlants.value
 
-            if (plants != null && plants.size > 0) {
-                for (plantInList in plants){
-                    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-                    val dateBefore: LocalDate = LocalDate.now()
-                    val dateAfter: LocalDate = LocalDate.parse(plantInList.createTime, formatter)
-                    val scheduleItem = getPlantListItem(plantInList, 0, dateBefore, dateAfter, formatter)
-                    if (scheduleItem.water) {
-                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, action = "Water", isDone = false))
-                    }
-                    if (scheduleItem.trim) {
-                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, action = "Trim", isDone = false))
-                    }
-                    if (scheduleItem.feed) {
-                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, action = "Feed", isDone = false))
-                    }
-                }
-            }
-        }
-
-
-//        plantViewModel.allPlants.observe(activity) { plants ->
-//            plants.let {
-//                localPlants = it
-//                adapter.update(get(it))
+//            if (plants != null && plants.size > 0) {
+//                for (plantInList in plants){
+//                    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+//                    val dateBefore: LocalDate = LocalDate.now()
+//                    val dateAfter: LocalDate = LocalDate.parse(plantInList.createTime, formatter)
+//                    val scheduleItem = getPlantListItem(plantInList, 0, dateBefore, dateAfter, formatter)
+//                    if (scheduleItem.water) {
+//                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, plantId = plantInList.id, action = "Water", isDone = false))
+//                    }
+//                    if (scheduleItem.trim) {
+//                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, plantId = plantInList.id, action = "Trim", isDone = false))
+//                    }
+//                    if (scheduleItem.feed) {
+//                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, plantId = plantInList.id, action = "Feed", isDone = false))
+//                    }
+//                }
 //            }
-//        }
+        }*/
 
-//        val list2 = arrayListOf<Notification>()
-//        list.add(Notification("Water sunflowe","greenhouse #2", false))
-//        list.add(Notification("Trim daisy","flowerpot with sun", false))
-
-
+//        var list = arrayListOf<Task>()
         recycler = view.findViewById(R.id.notifications_adapter)
-        adapter = TaskAdapter(list)
+        adapter = TaskAdapter(this, arrayListOf<Task>())
         recycler.adapter = adapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler.layoutManager = layoutManager
@@ -108,6 +109,76 @@ class NotificationsFragment : Fragment(R.layout.notifications) {
             }
         }
 
+    }
+
+    override fun onItemClick(task: Task) {
+        plantViewModel.updateTask(task)
+    }
+
+    fun createTasks(oldTasks: List<Task>, plants: List<Plant>): ArrayList<Task> {
+        val newTasks = arrayListOf<Task>()
+        if (plants.size > 0) {
+            for (plantInList in plants) {
+                val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                val dateBefore: LocalDate = LocalDate.now()
+                val dateAfter: LocalDate = LocalDate.parse(plantInList.createTime, formatter)
+                val scheduleItem =
+                    getPlantListItem(plantInList, 0, dateBefore, dateAfter, formatter)
+                if (scheduleItem.water) {
+                    newTasks.add(
+                        Task(
+                            name = scheduleItem.name,
+                            comment = scheduleItem.comment,
+                            plantId = plantInList.id,
+                            action = "Water",
+                            isDone = false
+                        )
+                    )
+                }
+                if (scheduleItem.trim) {
+                    newTasks.add(
+                        Task(
+                            name = scheduleItem.name,
+                            comment = scheduleItem.comment,
+                            plantId = plantInList.id,
+                            action = "Trim",
+                            isDone = false
+                        )
+                    )
+                }
+                if (scheduleItem.feed) {
+                    newTasks.add(
+                        Task(
+                            name = scheduleItem.name,
+                            comment = scheduleItem.comment,
+                            plantId = plantInList.id,
+                            action = "Feed",
+                            isDone = false
+                        )
+                    )
+                }
+            }
+        }
+
+        val map: MutableMap<String, Boolean> = mutableMapOf()
+
+        val sdf = SimpleDateFormat("dd.MM.yyyy")
+        val todayDate = sdf.format(Date())
+
+        for (task in oldTasks){
+            if (task.taskDate.equals(todayDate)) {
+                map.put(task.name + task.action + " " + task.plantId.toString(), task.isDone)
+            }
+        }
+
+        for (task in newTasks){
+            val item = map.get(task.name + task.action + " " + task.plantId.toString())
+            if (item!= null){
+                task.isDone = item
+            }
+        }
+
+        return newTasks
     }
 
     fun getPlantListItem(
