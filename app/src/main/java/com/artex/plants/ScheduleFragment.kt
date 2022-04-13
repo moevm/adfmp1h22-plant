@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.adapters.ScheduleAdapter
 import com.artex.plants.data.*
+import com.artex.plants.viewmodels.PlantViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -30,16 +31,31 @@ class ScheduleFragment : Fragment(R.layout.shedule) {
         val list = arrayListOf<ScheduleItem>()
         if (args.mode == ScheduleMode.GLOBAL) {
             title.text = "Shared Schedule"
-            list.add(Message("Today", Type.DAY))
-            list.add(PlantListItem("Rose", "flowerpot with bus", type = Type.PLANT))
-            list.add(Message("water", Type.ACTION))
-            list.add(PlantListItem("Iris", "flowerpot with ball", type = Type.PLANT))
-            list.add(Message("trim", Type.ACTION))
-            list.add(Message("Tomorrow", Type.DAY))
-            list.add(PlantListItem("Daisy", "flowerpot with sun", type = Type.PLANT))
-            list.add(Message("feed", Type.ACTION))
-            list.add(Message("9:00 get from hotbed", Type.ACTION))
-            list.add(Message("21:00 put in hotbed", Type.ACTION))
+
+            val activity: MainActivity = activity as MainActivity
+            val plantViewModel: PlantViewModel = activity.plantViewModel
+            val plants = plantViewModel.allPlants.value
+
+            if (plants != null && plants.size > 0) {
+                list.add(Message("Today", Type.DAY))
+                for (plantInList in plants){
+                    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                    val dateBefore: LocalDate = LocalDate.now()
+                    val dateAfter: LocalDate = LocalDate.parse(plantInList.createTime, formatter)
+                    list.add(getPlantListItem(plantInList, 0, dateBefore, dateAfter, formatter))
+                }
+            }
+
+            if (plants != null && plants.size > 0) {
+                list.add(Message("Tomorrow", Type.DAY))
+                for (plantInList in plants){
+                    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                    val dateBefore: LocalDate = LocalDate.now()
+                    val dateAfter: LocalDate = LocalDate.parse(plantInList.createTime, formatter)
+                    list.add(getPlantListItem(plantInList, 1, dateBefore, dateAfter, formatter))
+                }
+            }
+
         }
         if (args.mode == ScheduleMode.LOCAL) {
             val plant = args.plant
@@ -50,35 +66,7 @@ class ScheduleFragment : Fragment(R.layout.shedule) {
             val dateAfter: LocalDate = LocalDate.parse(plant.createTime, formatter)
             for (i in 0..6) {
                 if (i != 0) dateBefore = dateBefore.plusDays(1)
-                val daysBetween: Long = ChronoUnit.DAYS.between(dateAfter, dateBefore)
-
-                val waterPosition = modes.size - getPosition(plant.water, modes)
-                val water = waterPosition != 0 && ((daysBetween).toInt() % waterPosition) == 0
-
-                val feedPosition = modes.size - getPosition(plant.feed, modes)
-                val feed = feedPosition != 0 && ((daysBetween).toInt() % feedPosition) == 0
-
-                val trimPosition = modes.size - getPosition(plant.trim, modes)
-                val trim = trimPosition != 0 && ((daysBetween).toInt() % trimPosition) == 0
-
-                var date = dateBefore.format(formatter)
-
-                if (i == 0) date = "Today " + date
-                if (i == 1) date = "Tommorow " + date
-
-                val plantListItem = PlantListItem(
-                    plant.name,
-                    plant.comment,
-                    water = water,
-                    feed = feed,
-                    trim = trim,
-                    getFromHotbed = plant.getFromHotbed,
-                    putInHotbed = plant.putInHotbed,
-                    isHotbedUse = plant.isHotbedUse,
-                    date = date,
-                    type = Type.PLANT
-                )
-                list.add(plantListItem)
+                list.add(getPlantListItem(plant, i, dateBefore, dateAfter, formatter))
             }
         }
         recycler = view.findViewById(R.id.shedule_recycler)
@@ -86,7 +74,43 @@ class ScheduleFragment : Fragment(R.layout.shedule) {
         recycler.adapter = adapter
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler.layoutManager = layoutManager
+    }
 
+    fun getPlantListItem(
+        plant: Plant,
+        i: Int,
+        dateBefore: LocalDate,
+        dateAfter: LocalDate,
+        formatter: DateTimeFormatter
+    ): PlantListItem {
+        val daysBetween: Long = ChronoUnit.DAYS.between(dateAfter, dateBefore)
+
+        val waterPosition = modes.size - getPosition(plant.water, modes)
+        val water = waterPosition != 0 && ((daysBetween).toInt() % waterPosition) == 0
+
+        val feedPosition = modes.size - getPosition(plant.feed, modes)
+        val feed = feedPosition != 0 && ((daysBetween).toInt() % feedPosition) == 0
+
+        val trimPosition = modes.size - getPosition(plant.trim, modes)
+        val trim = trimPosition != 0 && ((daysBetween).toInt() % trimPosition) == 0
+
+        var date = dateBefore.format(formatter)
+
+        if (i == 0) date = "Today " + date
+        if (i == 1) date = "Tommorow " + date
+
+        return PlantListItem(
+            plant.name,
+            plant.comment,
+            water = water,
+            feed = feed,
+            trim = trim,
+            getFromHotbed = plant.getFromHotbed,
+            putInHotbed = plant.putInHotbed,
+            isHotbedUse = plant.isHotbedUse,
+            date = date,
+            type = Type.PLANT
+        )
     }
 
     fun getPosition(mode: String, modes: Array<String>): Int {

@@ -72,4 +72,14 @@
         app:layout_constraintEnd_toEndOf="@+id/recycler"
         app:layout_constraintTop_toTopOf="@+id/searchBtn"
         app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_grass_24"
+        app:layout_constraintBottom_toTopOf="@+id/scheduleBtn"
+        app:layout_constraintEnd_toEndOf="@+id/recycler" />
 </androidx.constraintlayout.widget.ConstraintLayout>
