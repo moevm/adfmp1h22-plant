@@ -16,16 +16,21 @@ import androidx.core.app.NotificationManagerCompat;
 import com.artex.plants.MainActivity;
 import com.artex.plants.R;
 
-public class MemoBroadcast extends BroadcastReceiver {
+public class NotificationBroadcast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        Bundle bundle = intent.getExtras();
+        int id = bundle.getInt("key", 200);
+        String channelId = bundle.getString("channelId", "Notification");
+
         Intent repeating_Intent = new Intent(context, MainActivity.class);
         repeating_Intent.putExtra("key","notify");
         repeating_Intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, repeating_Intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Notification")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.beer_notification)
                 .setLargeIcon(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.thinkman1), 128, 128, false))
@@ -36,6 +41,6 @@ public class MemoBroadcast extends BroadcastReceiver {
 
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(200, builder.build());
+        notificationManager.notify(id, builder.build());
     }
 }

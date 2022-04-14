@@ -46,51 +46,6 @@ class NotificationsFragment : Fragment(R.layout.notifications), TaskAdapter.OnTa
             }
         }
 
-        /*var isTodayData = true
-        if (tasks != null) {
-            if (tasks.size > 0) {
-                val sdf = SimpleDateFormat("dd.MM.yyyy")
-                val todayDate = sdf.format(Date())
-                for (item in tasks) {
-                    if (!item.taskDate.equals(todayDate)) {
-                        plantViewModel.deleteAllTasks()
-                        isTodayData = false
-                        break
-                    }
-                }
-            } else {
-                isTodayData = false
-            }
-        } else {
-            isTodayData = false
-        }*/
-
-
-        /*if (isTodayData) {
-//            list = tasks as ArrayList<Task>
-        } else {
-            val plants = plantViewModel.allPlants.value
-
-//            if (plants != null && plants.size > 0) {
-//                for (plantInList in plants){
-//                    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
-//                    val dateBefore: LocalDate = LocalDate.now()
-//                    val dateAfter: LocalDate = LocalDate.parse(plantInList.createTime, formatter)
-//                    val scheduleItem = getPlantListItem(plantInList, 0, dateBefore, dateAfter, formatter)
-//                    if (scheduleItem.water) {
-//                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, plantId = plantInList.id, action = "Water", isDone = false))
-//                    }
-//                    if (scheduleItem.trim) {
-//                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, plantId = plantInList.id, action = "Trim", isDone = false))
-//                    }
-//                    if (scheduleItem.feed) {
-//                        plantViewModel.insertTask(Task(name = scheduleItem.name, comment = scheduleItem.comment, plantId = plantInList.id, action = "Feed", isDone = false))
-//                    }
-//                }
-//            }
-        }*/
-
-//        var list = arrayListOf<Task>()
         recycler = view.findViewById(R.id.notifications_adapter)
         adapter = TaskAdapter(this, arrayListOf<Task>())
         recycler.adapter = adapter
@@ -104,7 +59,6 @@ class NotificationsFragment : Fragment(R.layout.notifications), TaskAdapter.OnTa
 
         plantViewModel.allTasks.observe(activity) { tasks ->
             tasks.let {
-//                localPlants = it
                 adapter.update(it)
             }
         }

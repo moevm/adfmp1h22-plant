@@ -19,4 +19,6 @@
         <item>every 1 days</item>
         <item>never</item>
     </string-array>
+
+    <string name="last_notification_time">last_notification_time</string>
 </resources>
