@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:text="My Flowers"
-        android:textSize="24sp"
+        android:text="Your Flowers"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,12 +24,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topic" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/scheduleBtn"
@@ -54,25 +54,14 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:id="@+id/searchBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:src="@drawable/ic_baseline_search_24"
-        app:layout_constraintBottom_toBottomOf="@+id/topic"
-        app:layout_constraintEnd_toStartOf="@+id/sortBtn"
-        app:layout_constraintTop_toTopOf="@+id/topic" />
-
-    <ImageView
         android:id="@+id/sortBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:src="@drawable/ic_baseline_sort_24"
-        app:layout_constraintBottom_toBottomOf="@+id/searchBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/topic"
         app:layout_constraintEnd_toEndOf="@+id/recycler"
-        app:layout_constraintTop_toTopOf="@+id/searchBtn"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/topic" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/careBtn"
@@ -84,4 +73,17 @@
         android:src="@drawable/ic_baseline_grass_24"
         app:layout_constraintBottom_toTopOf="@+id/scheduleBtn"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="33dp"
+        android:background="@drawable/search_view_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topic" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
