@@ -71,4 +71,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/plantSheduleBtn" />
 
+    <Button
+        android:id="@+id/to_edit_frag_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Edit Plant"
+        app:layout_constraintEnd_toEndOf="@+id/carePlanBtn"
+        app:layout_constraintStart_toStartOf="@+id/carePlanBtn"
+        app:layout_constraintTop_toBottomOf="@+id/carePlanBtn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -66,6 +66,11 @@ class PlantFragment : Fragment(R.layout.plant) {
             findNavController().navigate(action)
         }
 
+        view.findViewById<Button>(R.id.to_edit_frag_btn).setOnClickListener {
+            val action = PlantFragmentDirections.actionPlantToEditPlanFragment(plant)
+            findNavController().navigate(action)
+        }
+
         plantImage.setOnClickListener {
             openActivityForResult()
         }

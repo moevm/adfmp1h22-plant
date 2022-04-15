@@ -46,6 +46,9 @@
         <argument
             android:name="plant"
             app:argType="com.artex.plants.data.Plant" />
+        <action
+            android:id="@+id/action_plant_to_editPlanFragment"
+            app:destination="@id/editPlanFragment" />
     </fragment>
     <fragment
         android:id="@+id/shedule"
@@ -75,5 +78,13 @@
             android:id="@+id/action_notificationsFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editPlanFragment"
+        android:name="com.artex.plants.EditPlanFragment"
+        android:label="EditPlanFragment" >
+        <argument
+            android:name="plant"
+            app:argType="com.artex.plants.data.Plant" />
     </fragment>
 </navigation>
