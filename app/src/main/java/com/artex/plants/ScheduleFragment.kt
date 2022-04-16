@@ -100,6 +100,7 @@ class ScheduleFragment : Fragment(R.layout.shedule) {
         if (i == 1) date = "Tommorow " + date
 
         return PlantListItem(
+            plant.id,
             plant.name,
             plant.comment,
             water = water,

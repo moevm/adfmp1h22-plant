@@ -1,6 +1,7 @@
 package com.artex.plants.data
 
 data class PlantListItem(
+    var id: Int = 0,
     var name: String = "",
     var comment: String = "",
     var water: Boolean = false,

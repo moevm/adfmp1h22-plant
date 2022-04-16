@@ -2,18 +2,19 @@ package com.artex.plants
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.artex.plants.adapters.ChapterAdapter
-import com.artex.plants.data.Plant
-import com.artex.plants.data.PlantListItem
-import com.artex.plants.data.ScheduleMode
-import com.artex.plants.data.Type
+import com.artex.plants.data.*
 import com.artex.plants.viewmodels.PlantViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.Comparator
 
 
 class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantClickListener {
@@ -23,6 +24,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
     private lateinit var plantViewModel: PlantViewModel
     private lateinit var localPlants: List<Plant>
     private lateinit var searchView: SearchView
+    private var sortType: SortType = SortType.DEFAULT
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +40,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
-                filterList(newText)
+                filterAndSortList(newText)
                 return false
             }
 
@@ -67,6 +69,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
             findNavController().navigate(action)
         }
 
+        view.findViewById<ImageView>(R.id.sortBtn).setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToEditSortFragment()
+            findNavController().navigate(action)
+        }
+
         val activity: MainActivity = activity as MainActivity
         plantViewModel = activity.plantViewModel
         plantViewModel.allPlants.observe(activity) { plants ->
@@ -83,31 +90,108 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
             }
         }
 
+        val navController = findNavController();
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<String>("sortKey")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                when (result) {
+                    "sortNameAscend" -> {
+                        sortType = SortType.SORT_NAME_ASCEND
+                        filterAndSortList("")
+                    }
+                    "sortNameDescend" -> {
+                        sortType = SortType.SORT_NAME_DESCEND
+                        filterAndSortList("")
+                    }
+                    "sortDateAscend" -> {
+                        sortType = SortType.SORT_DATE_ASCEND
+                        filterAndSortList("")
+//                        val copyLocalPlants = localPlants.toMutableList()
+//                        copyLocalPlants.sortWith(ComparePlantByDates)
+//                        val a = copyLocalPlants
+//                        adapter.update(get(copyLocalPlants))
+                    }
+                    "sortDateDescend" -> {
+                        sortType = SortType.SORT_DATE_DESCEND
+                        filterAndSortList("")
+//                        val copyLocalPlants = localPlants.toMutableList()
+//                        copyLocalPlants.sortWith(ComparePlantByDates)
+//                        copyLocalPlants.reverse()
+//                        adapter.update(get(copyLocalPlants))
+                    }
+                }
+            }
+
     }
 
-    override fun onItemClick(position: Int) {
-        val action = HomeFragmentDirections.actionHomeFragmentToPlant(localPlants[position])
-        findNavController().navigate(action)
+    override fun onItemClick(id: Int) {
+        for (plant in localPlants){
+            if (plant.id == id){
+                val action = HomeFragmentDirections.actionHomeFragmentToPlant(plant)
+                findNavController().navigate(action)
+                break
+            }
+        }
     }
 
     fun get(plants: List<Plant>): List<PlantListItem> {
         val list = arrayListOf<PlantListItem>()
         for (plant in plants) {
-            list.add(PlantListItem(name = plant.name, comment = plant.comment, type = Type.PLANT))
+            list.add(PlantListItem(id = plant.id, name = plant.name, comment = plant.comment, type = Type.PLANT))
         }
         return list
     }
 
-    fun filterList(searchText: String){
+    fun filterAndSortList(searchText: String) {
         val filteredList = arrayListOf<Plant>()
-        for (item in localPlants){
+
+        val copyLocalPlants = localPlants.toMutableList()
+
+        when(sortType){
+            SortType.SORT_NAME_ASCEND -> {
+                copyLocalPlants.sortBy { it.name }
+            }
+            SortType.SORT_NAME_DESCEND -> {
+                copyLocalPlants.sortByDescending { it.name }
+            }
+            SortType.SORT_DATE_ASCEND -> {
+                copyLocalPlants.sortWith(ComparePlantByDates)
+            }
+            SortType.SORT_DATE_DESCEND -> {
+                copyLocalPlants.sortWith(ComparePlantByDates)
+                copyLocalPlants.reverse()
+            }
+            SortType.DEFAULT -> {}
+        }
+
+        for (item in copyLocalPlants) {
             if (item.name.lowercase().contains(searchText.lowercase()) ||
-                item.comment.lowercase().contains(searchText.lowercase())) {
+                item.comment.lowercase().contains(searchText.lowercase())
+            ) {
                 filteredList.add(item)
             }
         }
 
         adapter.update(get(filteredList))
+    }
+
+    class ComparePlantByDates {
+        companion object : Comparator<Plant> {
+            override fun compare(a: Plant, b: Plant): Int {
+
+                val formatter = SimpleDateFormat("dd.MM.yyyy")
+                val dateA: Date = formatter.parse(a.createTime)
+                val dateB: Date = formatter.parse(b.createTime)
+
+                return when {
+                    dateA.year != dateB.year -> dateA.year - dateB.year
+                    dateA.month != dateB.month -> dateA.month - dateB.month
+                    else -> dateA.day - dateB.day
+                }
+
+            }
+        }
     }
 
 }

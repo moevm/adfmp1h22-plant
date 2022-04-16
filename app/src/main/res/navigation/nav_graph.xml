@@ -22,6 +22,9 @@
             android:id="@+id/action_homeFragment_to_notificationsFragment"
             app:destination="@id/notificationsFragment"
             app:popUpTo="@id/homeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_editSortFragment"
+            app:destination="@id/editSortFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPlant"
@@ -87,4 +90,8 @@
             android:name="plant"
             app:argType="com.artex.plants.data.Plant" />
     </fragment>
+    <dialog
+        android:id="@+id/editSortFragment"
+        android:name="com.artex.plants.EditSortFragment"
+        android:label="EditSortFragment" />
 </navigation>

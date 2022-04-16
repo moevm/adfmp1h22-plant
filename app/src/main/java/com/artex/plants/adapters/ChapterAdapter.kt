@@ -30,7 +30,7 @@ class ChapterAdapter(
         holder.plantComment.text = currentItem.comment
 
         holder.card.setOnClickListener {
-            listener.onItemClick(position)
+            listener.onItemClick(currentItem.id)
         }
     }
 
@@ -55,6 +55,6 @@ class ChapterAdapter(
     }
 
     interface OnPlantClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(id: Int)
     }
 }
