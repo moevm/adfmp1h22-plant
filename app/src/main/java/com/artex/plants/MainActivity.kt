@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         bundle?.let {
             val string: String? = it.getString("key")
             if (string.equals("notify")) {
-                Toast.makeText(applicationContext, "NOTIFY", Toast.LENGTH_SHORT).show()
 
                 val navHostFragment =
                     supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment

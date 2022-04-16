@@ -6,9 +6,12 @@ import com.artex.plants.data.Type
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import java.util.*
+import kotlin.Comparator
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -123,4 +126,44 @@ class ScheduleTests {
         assertEquals(true, plantListItemAfterTomorrow.trim)
         assertEquals(false, plantListItemAfterTomorrow.feed)
     }
+
+    @Test
+    fun sortPlantsTests() {
+        val list = arrayListOf<Plant>()
+        list.add(Plant(id=1,createTime = "14.12.2021"))
+        list.add(Plant(id=2,createTime = "17.12.2013"))
+        list.add(Plant(id=3,createTime = "04.01.2022"))
+        list.add(Plant(id=4,createTime = "11.12.2021"))
+        list.add(Plant(id=5,createTime = "11.12.2019"))
+        list.add(Plant(id=6,createTime = "10.12.2021"))
+
+        list.sortWith(ComparePlantByDates)
+        assertEquals(2,list[0].id)
+        assertEquals(5,list[1].id)
+        assertEquals(6,list[2].id)
+        assertEquals(4,list[3].id)
+        assertEquals(1,list[4].id)
+        assertEquals(3,list[4].id)
+    }
+
+    class ComparePlantByDates {
+        companion object : Comparator<Plant> {
+            override fun compare(a: Plant, b: Plant): Int {
+
+                val formatter = SimpleDateFormat("dd.MM.yyyy")
+                val dateA: Date = formatter.parse(a.createTime)
+                val dateB: Date = formatter.parse(b.createTime)
+
+                return when {
+                    dateA.year != dateB.year -> dateA.year - dateB.year
+                    dateA.month != dateB.month -> dateA.month - dateB.month
+                    else -> dateA.day - dateB.day
+                }
+
+            }
+        }
+    }
+
+
+
 }

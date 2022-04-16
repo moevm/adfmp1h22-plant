@@ -47,10 +47,7 @@ class PlantFragment : Fragment(R.layout.plant) {
 
         val uri = Uri.parse(plant.imagePath)
 
-        Toast.makeText(
-            context,
-            (context?.let { DocumentFile.fromSingleUri(it, uri) } !== null).toString(),
-            Toast.LENGTH_SHORT).show()
+
 
         if (plant.imagePath!=""){
             Picasso.get().load(uri).into(plantImage)
