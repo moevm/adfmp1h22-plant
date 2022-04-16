@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity() {
         notificationChannel("Notification")
 
         val calendar = Calendar.getInstance()
-        calendar[Calendar.HOUR_OF_DAY] = 17
-        calendar[Calendar.MINUTE] = 54
+        calendar[Calendar.HOUR_OF_DAY] = 9
+        calendar[Calendar.MINUTE] = 0
         calendar[Calendar.SECOND] = 0
 
         if (Calendar.getInstance().after(calendar)) {
@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        countOutstandingTasks()
+        //countOutstandingTasks()
     }
 
 }

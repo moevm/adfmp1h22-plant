@@ -32,10 +32,9 @@ public class NotificationBroadcast extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, repeating_Intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.beer_notification)
-                .setLargeIcon(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.thinkman1), 128, 128, false))
-                .setContentTitle("PASTICCINO")
-                .setContentText("This is a daily notification")
+                .setSmallIcon(R.drawable.ic_baseline_grass_24)
+                .setContentTitle("Time to care")
+                .setContentText("Take care of your plants")
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
