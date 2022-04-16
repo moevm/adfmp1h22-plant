@@ -52,6 +52,12 @@ class PlantRepository(private val plantDao: PlantDao, private val taskDao: TaskD
         plantDao.update(plant)
     }
 
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun deletePlantById(id: Int) {
+        plantDao.deletePlantById(id)
+    }
+
     val allTasks: Flow<List<Task>> = taskDao.getAlphabetizedWords()
 
     fun getTaskById(id: Int): Flow<Task> {
@@ -74,5 +80,11 @@ class PlantRepository(private val plantDao: PlantDao, private val taskDao: TaskD
     @WorkerThread
     suspend fun deleteAllTasks() {
         taskDao.deleteAll()
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun deleteTasksByPlantId(id: Int) {
+        taskDao.deleteTasksByPlantId(id)
     }
 }

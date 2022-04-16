@@ -67,7 +67,7 @@ class PlantFragment : Fragment(R.layout.plant) {
         }
 
         view.findViewById<Button>(R.id.to_edit_frag_btn).setOnClickListener {
-            val action = PlantFragmentDirections.actionPlantToEditPlanFragment(plant)
+            val action = PlantFragmentDirections.actionPlantToEditPlanFragment(plant, args.isCreateTime)
             findNavController().navigate(action)
         }
 

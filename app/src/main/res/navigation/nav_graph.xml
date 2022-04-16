@@ -52,6 +52,10 @@
         <action
             android:id="@+id/action_plant_to_editPlanFragment"
             app:destination="@id/editPlanFragment" />
+        <argument
+            android:name="isCreateTime"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/shedule"
@@ -89,6 +93,14 @@
         <argument
             android:name="plant"
             app:argType="com.artex.plants.data.Plant" />
+        <action
+            android:id="@+id/action_editPlanFragment_to_homeFragment2"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment" />
+        <argument
+            android:name="isCreateTime"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <dialog
         android:id="@+id/editSortFragment"

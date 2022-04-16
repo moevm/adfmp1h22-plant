@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,9 +43,10 @@ class AddPlantFragment : Fragment(R.layout.add_plant), PlantAddingAdapter.OnAddP
     }
 
     override fun onItemClick(model: Plant) {
-        Log.d("TAG", model.toString())
-        plantViewModel.insert(model)
-        val action = AddPlantFragmentDirections.actionAddPlantToPlant(model)
+        lifecycleScope.launchWhenCreated {
+            plantViewModel.insert(model)
+        }
+        val action = AddPlantFragmentDirections.actionAddPlantToPlant(model, true)
         findNavController().navigate(action)
     }
 

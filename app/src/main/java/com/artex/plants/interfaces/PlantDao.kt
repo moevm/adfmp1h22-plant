@@ -49,6 +49,6 @@ interface PlantDao {
     @Query("DELETE FROM plants")
     suspend fun deleteAll()
 
-    @Query("DELETE FROM tasks WHERE plantId=:id")
-    suspend fun deleteTaskByPlantId(id: Int)
+    @Query("DELETE FROM plants WHERE id=:id")
+    suspend fun deletePlantById(id: Int)
 }

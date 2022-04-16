@@ -56,6 +56,10 @@ class PlantViewModel(private val repository: PlantRepository) : ViewModel() {
         repository.update(word)
     }
 
+    fun deletePlantById(id: Int) = viewModelScope.launch {
+        repository.deletePlantById(id)
+    }
+
     val allTasks: LiveData<List<Task>> = repository.allTasks.asLiveData()
 
     /**
@@ -72,6 +76,10 @@ class PlantViewModel(private val repository: PlantRepository) : ViewModel() {
 
     fun updateTask(task: Task) = viewModelScope.launch {
         repository.updateTask(task)
+    }
+
+    fun deleteTasksByPlantId(id: Int) = viewModelScope.launch {
+        repository.deleteTasksByPlantId(id)
     }
 
     fun deleteAllTasks() = viewModelScope.launch {
