@@ -107,18 +107,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
                     "sortDateAscend" -> {
                         sortType = SortType.SORT_DATE_ASCEND
                         filterAndSortList("")
-//                        val copyLocalPlants = localPlants.toMutableList()
-//                        copyLocalPlants.sortWith(ComparePlantByDates)
-//                        val a = copyLocalPlants
-//                        adapter.update(get(copyLocalPlants))
                     }
                     "sortDateDescend" -> {
                         sortType = SortType.SORT_DATE_DESCEND
                         filterAndSortList("")
-//                        val copyLocalPlants = localPlants.toMutableList()
-//                        copyLocalPlants.sortWith(ComparePlantByDates)
-//                        copyLocalPlants.reverse()
-//                        adapter.update(get(copyLocalPlants))
                     }
                 }
             }
