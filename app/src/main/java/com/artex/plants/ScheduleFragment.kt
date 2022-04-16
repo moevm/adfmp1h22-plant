@@ -97,7 +97,7 @@ class ScheduleFragment : Fragment(R.layout.shedule) {
         var date = dateBefore.format(formatter)
 
         if (i == 0) date = "Today " + date
-        if (i == 1) date = "Tommorow " + date
+        if (i == 1) date = "Tomorrow " + date
 
         return PlantListItem(
             plant.id,
