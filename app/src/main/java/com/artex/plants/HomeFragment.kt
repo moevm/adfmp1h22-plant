@@ -175,13 +175,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), ChapterAdapter.OnPlantCli
                 val formatter = SimpleDateFormat("dd.MM.yyyy")
                 val dateA: Date = formatter.parse(a.createTime)
                 val dateB: Date = formatter.parse(b.createTime)
-
-                return when {
-                    dateA.year != dateB.year -> dateA.year - dateB.year
-                    dateA.month != dateB.month -> dateA.month - dateB.month
-                    else -> dateA.day - dateB.day
+                if (dateA.after(dateB)) {
+                    return 1
                 }
-
+                if (dateB.after(dateA)) {
+                    return -1
+                }
+                return 0
             }
         }
     }

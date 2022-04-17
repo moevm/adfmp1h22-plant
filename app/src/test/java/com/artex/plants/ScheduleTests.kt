@@ -143,7 +143,7 @@ class ScheduleTests {
         assertEquals(6,list[2].id)
         assertEquals(4,list[3].id)
         assertEquals(1,list[4].id)
-        assertEquals(3,list[4].id)
+        assertEquals(3,list[5].id)
     }
 
     class ComparePlantByDates {
@@ -153,13 +153,13 @@ class ScheduleTests {
                 val formatter = SimpleDateFormat("dd.MM.yyyy")
                 val dateA: Date = formatter.parse(a.createTime)
                 val dateB: Date = formatter.parse(b.createTime)
-
-                return when {
-                    dateA.year != dateB.year -> dateA.year - dateB.year
-                    dateA.month != dateB.month -> dateA.month - dateB.month
-                    else -> dateA.day - dateB.day
+                if (dateA.after(dateB)) {
+                    return 1
                 }
-
+                if (dateB.after(dateA)) {
+                    return -1
+                }
+                return 0
             }
         }
     }
